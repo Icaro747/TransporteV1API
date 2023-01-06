@@ -18,11 +18,13 @@ namespace TransporteV1API.Data
             modelBuilder.ApplyConfiguration(new SeguroCofiguration());
             modelBuilder.ApplyConfiguration(new FinanciamentoCofiguration());
             modelBuilder.ApplyConfiguration(new GastoCofiguration());
+            modelBuilder.ApplyConfiguration(new ClienteCofiguration());
         }
 
         public DbSet<Caminhao> Caminhaos { get; set; }
         public DbSet<Seguro> Seguros { get; set; }
         public DbSet<Financiamento> Financiamentos { get; set; }
         public DbSet<Gasto> Gastos { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
     }
 }
