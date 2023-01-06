@@ -19,6 +19,8 @@ namespace TransporteV1API.Data
             modelBuilder.ApplyConfiguration(new FinanciamentoCofiguration());
             modelBuilder.ApplyConfiguration(new GastoCofiguration());
             modelBuilder.ApplyConfiguration(new ClienteCofiguration());
+            modelBuilder.ApplyConfiguration(new FuncionarioCofiguration());
+            modelBuilder.ApplyConfiguration(new DocumentoFunCofiguration());
         }
 
         public DbSet<Caminhao> Caminhaos { get; set; }
@@ -26,5 +28,7 @@ namespace TransporteV1API.Data
         public DbSet<Financiamento> Financiamentos { get; set; }
         public DbSet<Gasto> Gastos { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<DocumentoFun> Documentos { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransporteV1API.Data;
 
@@ -10,9 +11,10 @@ using TransporteV1API.Data;
 namespace TransporteV1API.Migrations
 {
     [DbContext(typeof(TransporteContext))]
-    partial class TransporteContextModelSnapshot : ModelSnapshot
+    [Migration("20230106182752_AddFuncionarios")]
+    partial class AddFuncionarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,6 +114,9 @@ namespace TransporteV1API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<Guid>("FuncionarioId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("IdFuncionario")
                         .HasColumnType("char(36)");
 
@@ -125,7 +130,7 @@ namespace TransporteV1API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdFuncionario");
+                    b.HasIndex("FuncionarioId");
 
                     b.ToTable("Documentos", (string)null);
                 });
@@ -214,6 +219,9 @@ namespace TransporteV1API.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid>("CaminhaoId")
+                        .HasColumnType("char(36)");
+
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime(6)");
 
@@ -222,7 +230,7 @@ namespace TransporteV1API.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<Guid>("IdCaminhao")
+                    b.Property<Guid>("IdCamiao")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Tipo")
@@ -235,7 +243,7 @@ namespace TransporteV1API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCaminhao");
+                    b.HasIndex("CaminhaoId");
 
                     b.ToTable("Gastos", (string)null);
                 });
@@ -271,7 +279,7 @@ namespace TransporteV1API.Migrations
                 {
                     b.HasOne("TransporteV1API.Modals.Funcionario", "Funcionario")
                         .WithMany("Documentos")
-                        .HasForeignKey("IdFuncionario")
+                        .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -293,7 +301,7 @@ namespace TransporteV1API.Migrations
                 {
                     b.HasOne("TransporteV1API.Modals.Caminhao", "Caminhao")
                         .WithMany("Gastos")
-                        .HasForeignKey("IdCaminhao")
+                        .HasForeignKey("CaminhaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

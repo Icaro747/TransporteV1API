@@ -14,8 +14,8 @@ namespace TransporteV1API.Configuretion
             builder.Property(x => x.Descricao).HasMaxLength(200).IsRequired();
             builder.Property(x => x.Valor).IsRequired();
             builder.Property(x => x.Data).IsRequired();
-            builder.HasOne(x => x.Caminhao).WithMany(x => x.Gastos);
-            builder.Property(x => x.IdCamiao).IsRequired();
+            builder.HasOne(x => x.Caminhao).WithMany(x => x.Gastos).HasForeignKey(x => x.IdCaminhao);
+            builder.Property(x => x.IdCaminhao).IsRequired();
             builder.ToTable("Gastos");
         }
     }
