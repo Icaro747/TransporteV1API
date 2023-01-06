@@ -16,6 +16,7 @@ namespace TransporteV1API.Configuretion
             builder.Property(x => x.CNPJ).HasMaxLength(14).IsRequired();
             builder.Property(x => x.Telefone).HasMaxLength(11).IsRequired();
             builder.Property(x => x.Email).HasMaxLength(200).IsRequired();
+            builder.ToTable("Clientes");
         }
     }
 }

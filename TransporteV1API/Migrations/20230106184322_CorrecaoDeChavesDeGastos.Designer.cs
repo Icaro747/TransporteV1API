@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransporteV1API.Data;
 
@@ -10,9 +11,10 @@ using TransporteV1API.Data;
 namespace TransporteV1API.Migrations
 {
     [DbContext(typeof(TransporteContext))]
-    partial class TransporteContextModelSnapshot : ModelSnapshot
+    [Migration("20230106184322_CorrecaoDeChavesDeGastos")]
+    partial class CorrecaoDeChavesDeGastos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,7 +114,7 @@ namespace TransporteV1API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<Guid>("IdFuncionario")
+                    b.Property<Guid>("FuncionarioId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Tipo")
@@ -125,7 +127,7 @@ namespace TransporteV1API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdFuncionario");
+                    b.HasIndex("FuncionarioId");
 
                     b.ToTable("Documentos", (string)null);
                 });
@@ -271,7 +273,7 @@ namespace TransporteV1API.Migrations
                 {
                     b.HasOne("TransporteV1API.Modals.Funcionario", "Funcionario")
                         .WithMany("Documentos")
-                        .HasForeignKey("IdFuncionario")
+                        .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
