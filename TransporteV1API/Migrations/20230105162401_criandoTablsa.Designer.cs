@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransporteV1API.Data;
 
@@ -10,9 +11,10 @@ using TransporteV1API.Data;
 namespace TransporteV1API.Migrations
 {
     [DbContext(typeof(TransporteContext))]
-    partial class TransporteContextModelSnapshot : ModelSnapshot
+    [Migration("20230105162401_criandoTablsa")]
+    partial class criandoTablsa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +39,9 @@ namespace TransporteV1API.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
+                    b.Property<Guid>("FinanciamentoId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -52,12 +57,19 @@ namespace TransporteV1API.Migrations
                         .HasMaxLength(7)
                         .HasColumnType("varchar(7)");
 
+                    b.Property<Guid>("SeguroId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Tipo")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FinanciamentoId");
+
+                    b.HasIndex("SeguroId");
 
                     b.ToTable("Caminhaos", (string)null);
                 });
@@ -80,7 +92,7 @@ namespace TransporteV1API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<Guid>("IdCaminhao")
+                    b.Property<Guid>("IdCamiao")
                         .HasColumnType("char(36)");
 
                     b.Property<int>("QtdParcelas")
@@ -97,8 +109,7 @@ namespace TransporteV1API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCaminhao")
-                        .IsUnique();
+                    b.HasIndex("IdCamiao");
 
                     b.ToTable("Financiamentos", (string)null);
                 });
@@ -145,7 +156,7 @@ namespace TransporteV1API.Migrations
                     b.Property<DateTime>("DataVencimento")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("IdCaminhao")
+                    b.Property<Guid>("IdCamiao")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Numero")
@@ -158,17 +169,35 @@ namespace TransporteV1API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCaminhao")
-                        .IsUnique();
+                    b.HasIndex("IdCamiao");
 
                     b.ToTable("Seguros", (string)null);
+                });
+
+            modelBuilder.Entity("TransporteV1API.Modals.Caminhao", b =>
+                {
+                    b.HasOne("TransporteV1API.Modals.Financiamento", "Financiamento")
+                        .WithMany()
+                        .HasForeignKey("FinanciamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TransporteV1API.Modals.Seguro", "Seguro")
+                        .WithMany()
+                        .HasForeignKey("SeguroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Financiamento");
+
+                    b.Navigation("Seguro");
                 });
 
             modelBuilder.Entity("TransporteV1API.Modals.Financiamento", b =>
                 {
                     b.HasOne("TransporteV1API.Modals.Caminhao", "Caminhao")
-                        .WithOne("Financiamento")
-                        .HasForeignKey("TransporteV1API.Modals.Financiamento", "IdCaminhao")
+                        .WithMany()
+                        .HasForeignKey("IdCamiao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -189,8 +218,8 @@ namespace TransporteV1API.Migrations
             modelBuilder.Entity("TransporteV1API.Modals.Seguro", b =>
                 {
                     b.HasOne("TransporteV1API.Modals.Caminhao", "Caminhao")
-                        .WithOne("Seguro")
-                        .HasForeignKey("TransporteV1API.Modals.Seguro", "IdCaminhao")
+                        .WithMany()
+                        .HasForeignKey("IdCamiao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -199,13 +228,7 @@ namespace TransporteV1API.Migrations
 
             modelBuilder.Entity("TransporteV1API.Modals.Caminhao", b =>
                 {
-                    b.Navigation("Financiamento")
-                        .IsRequired();
-
                     b.Navigation("Gastos");
-
-                    b.Navigation("Seguro")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

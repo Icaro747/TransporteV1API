@@ -14,13 +14,15 @@ namespace TransporteV1API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new CamiaoCofiguration());
+            modelBuilder.ApplyConfiguration(new CaminhaoCofiguration());
             modelBuilder.ApplyConfiguration(new SeguroCofiguration());
             modelBuilder.ApplyConfiguration(new FinanciamentoCofiguration());
+            modelBuilder.ApplyConfiguration(new GastoCofiguration());
         }
 
-        public DbSet<Camiao> Camiaos { get; set; }
+        public DbSet<Caminhao> Caminhaos { get; set; }
         public DbSet<Seguro> Seguros { get; set; }
         public DbSet<Financiamento> Financiamentos { get; set; }
+        public DbSet<Gasto> Gastos { get; set; }
     }
 }
