@@ -17,10 +17,12 @@ namespace TransporteV1API
         {
             var Connection = Configuration.GetConnectionString("TransporteConnection");
             services.AddDbContext<TransporteContext>(opts => opts.UseMySql(Connection, ServerVersion.AutoDetect(Connection)));
-            services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddCors();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment environment)
@@ -32,6 +34,8 @@ namespace TransporteV1API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(option => { option.AllowAnyOrigin(); option.AllowAnyHeader(); option.AllowAnyMethod(); });
 
             app.UseAuthorization();
 

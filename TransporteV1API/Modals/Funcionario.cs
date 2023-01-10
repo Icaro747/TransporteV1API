@@ -10,5 +10,6 @@
         public float Salario { get; set; }
 
         public virtual ICollection<DocumentoFun> Documentos { get; set; }
+        public virtual ICollection<Equipe> Equipes { get; set; }
     }
 }

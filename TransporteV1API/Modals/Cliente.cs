@@ -8,5 +8,7 @@
         public string Telefone { get; set; }
         public string Email { get; set; }
 
+        public virtual ICollection<Frete> Fretes { get; set; }
+
     }
 }
