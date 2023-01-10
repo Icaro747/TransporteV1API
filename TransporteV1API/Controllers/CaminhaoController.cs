@@ -3,6 +3,7 @@ using TransporteV1API.Modals;
 using TransporteV1API.Data;
 using TransporteV1API.Data.Dtos;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace TransporteV1API.Controllers
 {
@@ -35,11 +36,14 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaCaminhaoPorId([FromQuery] Guid id)
+        public IActionResult RecuperaCaminhaoPorId(Guid id)
         {
-            Caminhao Caminhao = _context.Caminhaos.FirstOrDefault(x => x.Id == id);
+            Caminhao caminhao = _context.Caminhaos
+                .Include(x => x.Financiamento)
+                .Include(x => x.Seguro)
+                .SingleOrDefault(x => x.Id == id);
 
-            return Caminhao != null ? Ok(Caminhao) : NotFound();
+            return caminhao != null ? Ok(caminhao) : NotFound();
         }
 
         [HttpPut("{id}")]

@@ -21,6 +21,9 @@ namespace TransporteV1API.Data
             modelBuilder.ApplyConfiguration(new ClienteCofiguration());
             modelBuilder.ApplyConfiguration(new FuncionarioCofiguration());
             modelBuilder.ApplyConfiguration(new DocumentoFunCofiguration());
+            modelBuilder.ApplyConfiguration(new FreteCofiguration());
+            modelBuilder.ApplyConfiguration(new ParcelaCofiguration());
+            modelBuilder.ApplyConfiguration(new EquipeCofiguration());
         }
 
         public DbSet<Caminhao> Caminhaos { get; set; }
@@ -30,5 +33,8 @@ namespace TransporteV1API.Data
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<DocumentoFun> Documentos { get; set; }
+        public DbSet<Frete> Fretes { get; set; }
+        public DbSet<Parcela> Parcelas { get; set; }
+        public DbSet<Equipe> Equipes { get; set; }
     }
 }
