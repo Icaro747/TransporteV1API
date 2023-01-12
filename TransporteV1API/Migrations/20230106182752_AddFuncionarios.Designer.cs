@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransporteV1API.Data;
 
@@ -10,9 +11,10 @@ using TransporteV1API.Data;
 namespace TransporteV1API.Migrations
 {
     [DbContext(typeof(TransporteContext))]
-    partial class TransporteContextModelSnapshot : ModelSnapshot
+    [Migration("20230106182752_AddFuncionarios")]
+    partial class AddFuncionarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,6 +114,9 @@ namespace TransporteV1API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<Guid>("FuncionarioId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("IdFuncionario")
                         .HasColumnType("char(36)");
 
@@ -125,32 +130,9 @@ namespace TransporteV1API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdFuncionario");
+                    b.HasIndex("FuncionarioId");
 
                     b.ToTable("Documentos", (string)null);
-                });
-
-            modelBuilder.Entity("TransporteV1API.Modals.Equipe", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("char(36)");
-
-                    b.Property<float>("Comissao")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("IdFrete")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("IdFuncionario")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdFrete");
-
-                    b.HasIndex("IdFuncionario");
-
-                    b.ToTable("Equipes", (string)null);
                 });
 
             modelBuilder.Entity("TransporteV1API.Modals.Financiamento", b =>
@@ -192,45 +174,6 @@ namespace TransporteV1API.Migrations
                         .IsUnique();
 
                     b.ToTable("Financiamentos", (string)null);
-                });
-
-            modelBuilder.Entity("TransporteV1API.Modals.Frete", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("DataFim")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Destino")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<Guid>("IdCaminhao")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("IdCliente")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Origem")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<float>("ValorTotal")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdCaminhao");
-
-                    b.HasIndex("IdCliente");
-
-                    b.ToTable("Fretes", (string)null);
                 });
 
             modelBuilder.Entity("TransporteV1API.Modals.Funcionario", b =>
@@ -276,6 +219,9 @@ namespace TransporteV1API.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid>("CaminhaoId")
+                        .HasColumnType("char(36)");
+
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime(6)");
 
@@ -284,7 +230,7 @@ namespace TransporteV1API.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<Guid>("IdCaminhao")
+                    b.Property<Guid>("IdCamiao")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Tipo")
@@ -297,30 +243,9 @@ namespace TransporteV1API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdCaminhao");
+                    b.HasIndex("CaminhaoId");
 
                     b.ToTable("Gastos", (string)null);
-                });
-
-            modelBuilder.Entity("TransporteV1API.Modals.Parcela", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("IdFrete")
-                        .HasColumnType("char(36)");
-
-                    b.Property<float>("Valor")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdFrete");
-
-                    b.ToTable("Parcelas", (string)null);
                 });
 
             modelBuilder.Entity("TransporteV1API.Modals.Seguro", b =>
@@ -354,28 +279,9 @@ namespace TransporteV1API.Migrations
                 {
                     b.HasOne("TransporteV1API.Modals.Funcionario", "Funcionario")
                         .WithMany("Documentos")
-                        .HasForeignKey("IdFuncionario")
+                        .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Funcionario");
-                });
-
-            modelBuilder.Entity("TransporteV1API.Modals.Equipe", b =>
-                {
-                    b.HasOne("TransporteV1API.Modals.Frete", "Frete")
-                        .WithMany("Equipes")
-                        .HasForeignKey("IdFrete")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TransporteV1API.Modals.Funcionario", "Funcionario")
-                        .WithMany("Equipes")
-                        .HasForeignKey("IdFuncionario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Frete");
 
                     b.Navigation("Funcionario");
                 });
@@ -391,45 +297,15 @@ namespace TransporteV1API.Migrations
                     b.Navigation("Caminhao");
                 });
 
-            modelBuilder.Entity("TransporteV1API.Modals.Frete", b =>
-                {
-                    b.HasOne("TransporteV1API.Modals.Caminhao", "Caminhao")
-                        .WithMany("Fretes")
-                        .HasForeignKey("IdCaminhao")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TransporteV1API.Modals.Cliente", "Cliente")
-                        .WithMany("Fretes")
-                        .HasForeignKey("IdCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Caminhao");
-
-                    b.Navigation("Cliente");
-                });
-
             modelBuilder.Entity("TransporteV1API.Modals.Gasto", b =>
                 {
                     b.HasOne("TransporteV1API.Modals.Caminhao", "Caminhao")
                         .WithMany("Gastos")
-                        .HasForeignKey("IdCaminhao")
+                        .HasForeignKey("CaminhaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Caminhao");
-                });
-
-            modelBuilder.Entity("TransporteV1API.Modals.Parcela", b =>
-                {
-                    b.HasOne("TransporteV1API.Modals.Frete", "Frete")
-                        .WithMany("Parcelas")
-                        .HasForeignKey("IdFrete")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Frete");
                 });
 
             modelBuilder.Entity("TransporteV1API.Modals.Seguro", b =>
@@ -448,31 +324,15 @@ namespace TransporteV1API.Migrations
                     b.Navigation("Financiamento")
                         .IsRequired();
 
-                    b.Navigation("Fretes");
-
                     b.Navigation("Gastos");
 
                     b.Navigation("Seguro")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TransporteV1API.Modals.Cliente", b =>
-                {
-                    b.Navigation("Fretes");
-                });
-
-            modelBuilder.Entity("TransporteV1API.Modals.Frete", b =>
-                {
-                    b.Navigation("Equipes");
-
-                    b.Navigation("Parcelas");
-                });
-
             modelBuilder.Entity("TransporteV1API.Modals.Funcionario", b =>
                 {
                     b.Navigation("Documentos");
-
-                    b.Navigation("Equipes");
                 });
 #pragma warning restore 612, 618
         }

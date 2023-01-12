@@ -1,10 +1,11 @@
 ﻿namespace TransporteV1API.Modals
 {
-    public class Seguro : Entity, IEntity
+    public class Gasto : Entity, IEntity
     {
-        public string Numero { get; set; }
+        public string Tipo { get; set; }
+        public string Descricao { get; set; }
         public float Valor { get; set; }
-        public DateTime DataVencimento { get; set; }
+        public DateTime Data { get; set; }
 
         public Guid IdCaminhao { get; set; }
         public virtual Caminhao Caminhao { get; set; }
