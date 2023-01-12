@@ -26,7 +26,7 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaFuncionarioPorId([FromQuery] Guid id)
+        public IActionResult RecuperaFuncionarioPorId(Guid id)
         {
             Funcionario funcionario = _context.Funcionarios.FirstOrDefault(x => x.Id == id);
 

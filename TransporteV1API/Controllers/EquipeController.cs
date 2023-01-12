@@ -26,7 +26,7 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaEquipePorId([FromQuery] Guid id)
+        public IActionResult RecuperaEquipePorId(Guid id)
         {
             Equipe equipe = _context.Equipes.FirstOrDefault(x => x.Id == id);
 

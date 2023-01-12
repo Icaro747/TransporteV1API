@@ -26,7 +26,7 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaParcelaPorId([FromQuery] Guid id)
+        public IActionResult RecuperaParcelaPorId(Guid id)
         {
             Parcela parcela = _context.Parcelas.FirstOrDefault(x => x.Id == id);
 
