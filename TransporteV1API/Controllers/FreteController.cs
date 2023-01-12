@@ -26,7 +26,7 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaFretePorId([FromQuery] Guid id)
+        public IActionResult RecuperaFretePorId(Guid id)
         {
             Frete frete = _context.Fretes.FirstOrDefault(x => x.Id == id);
 

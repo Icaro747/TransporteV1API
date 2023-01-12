@@ -26,7 +26,7 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaSeguroPorId([FromQuery] Guid id)
+        public IActionResult RecuperaSeguroPorId(Guid id)
         {
             Seguro seguro = _context.Seguros.FirstOrDefault(x => x.Id == id);
 

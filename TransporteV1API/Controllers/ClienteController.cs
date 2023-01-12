@@ -36,7 +36,7 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaClientePorId([FromQuery] Guid id)
+        public IActionResult RecuperaClientePorId(Guid id)
         {
             Cliente cliente = _context.Clientes.FirstOrDefault(x => x.Id == id);
 

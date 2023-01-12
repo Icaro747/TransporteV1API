@@ -26,7 +26,7 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaFinanciamentoPorId([FromQuery] Guid id)
+        public IActionResult RecuperaFinanciamentoPorId(Guid id)
         {
             Financiamento financiamento = _context.Financiamentos.FirstOrDefault(x => x.Id == id);
 

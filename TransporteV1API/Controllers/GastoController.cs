@@ -26,7 +26,7 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaGastoPorId([FromQuery] Guid id)
+        public IActionResult RecuperaGastoPorId(Guid id)
         {
             Gasto gasto = _context.Gastos.FirstOrDefault(x => x.Id == id);
 

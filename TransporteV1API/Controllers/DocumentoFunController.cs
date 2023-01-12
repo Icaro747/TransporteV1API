@@ -26,7 +26,7 @@ namespace TransporteV1API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperaDocumentoPorId([FromQuery] Guid id)
+        public IActionResult RecuperaDocumentoPorId(Guid id)
         {
             DocumentoFun Documento = _context.Documentos.FirstOrDefault(x => x.Id == id);
 
